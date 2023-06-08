@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 function send_notification {
   currentBrightness="$(brightnessctl g)"
   # Send the notification
