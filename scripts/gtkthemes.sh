@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ## Set GTK Themes, Icons, Cursor and Fonts
 

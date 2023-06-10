@@ -1,5 +1,5 @@
 {
-    "layer": "bottom",
+    "layer": "top",
     "position": "top", // Waybar position (top|bottom|left|right)
     // Choose the order of the modules
     "modules-left": ["wlr/workspaces", "hyprland/window"],

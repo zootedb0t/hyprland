@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 wal_dir=/home/stoney/Pictures/walls/
 
@@ -9,8 +9,7 @@ else
 fi
 
 convert "$wall" ~/.local/share/bg.jpg
-wal -c
-wal -nqsi ~/.local/share/bg.jpg
+wal -nqsic ~/.local/share/bg.jpg
 
 # Generate zathura, dunst and rofi colorscheme
 "$HOME"/.local/bin/pywalzathura &
