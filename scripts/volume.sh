@@ -13,11 +13,11 @@ send_notification() {
 
 case $1 in
 up)
-	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ -l 1
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
 	send_notification
 	;;
 down)
-	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- -l 1
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 	send_notification
 	;;
 mute)
@@ -29,5 +29,8 @@ mute)
 	else
 		send_notification
 	fi
+	;;
+mic)
+	wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 	;;
 esac
