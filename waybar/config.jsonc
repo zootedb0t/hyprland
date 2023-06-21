@@ -34,7 +34,7 @@
     "tooltip": false
   },
   "memory": {
-    "format": "{}% ",
+    "format": "{used}GiB ({percentage}%) ",
     "on-click": "foot -e btop"
   },
   "temperature": {
@@ -68,7 +68,7 @@
     "format-linked": "{ifname} (No IP) ",
     "format-disconnected": "Disconnected ⚠",
     "format-alt": "{ifname}: {ipaddr}/{cidr}",
-    "on-click-right": "kitty nmtui"
+    "on-click-right": "foot -e nmtui"
   },
   "pulseaudio": {
     // "scroll-step": 1, // %, can be a float
