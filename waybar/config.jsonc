@@ -13,8 +13,8 @@
     "temperature",
     "battery",
     "custom/backlight",
-    "clock"
-    // "tray"
+    "clock",
+    "tray"
   ],
   // Modules configuration
   "wlr/workspaces": {
