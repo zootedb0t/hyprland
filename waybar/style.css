@@ -1,5 +1,5 @@
 * {
-    font-family: "Terminus", sans-serif;
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
     font-size: 14px;
     font-weight: normal;
     border: none;
@@ -33,7 +33,7 @@ button:hover {
 }
 
 #workspaces button {
-    padding: 2px 2px;
+    padding: 1px 8px;
     background-color: transparent;
     color: #ffffff;
 }
@@ -71,7 +71,7 @@ button:hover {
 #custom-backlight,
 #custom-update
 {
-    padding: 2px 8px;
+    padding: 1px 8px;
     color: #000000;
 }
 

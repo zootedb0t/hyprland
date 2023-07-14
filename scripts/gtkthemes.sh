@@ -4,7 +4,7 @@
 
 THEME='Adwaita-dark'
 ICONS='Papirus-Dark'
-FONT='Noto Sans 11'
+FONT='Noto Sans 12'
 CURSOR='Breeze_Obsidian'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'
