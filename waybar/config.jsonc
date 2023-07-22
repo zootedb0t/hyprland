@@ -26,16 +26,16 @@
   "clock": {
     // "timezone": "America/New_York",
     // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%d %b, %H:%M} 󰅐",
+    "format": "󰅐 {:%d %b, %H:%M}",
     "format-alt": "{:%d-%m-%Y}"
   },
   "cpu": {
-    "format": "{usage}% ",
+    "format": " {usage}%",
     "tooltip": false
   },
   "memory": {
-    "format": "{used}GiB ({percentage}%) ",
-    "on-click": "foot -e btop"
+    "format": " {used}GiB ({percentage}%)",
+    "on-click": "kitty -e btop"
   },
   "temperature": {
     // "thermal-zone": 2,
@@ -52,8 +52,8 @@
       "critical": 15
     },
     "format": "{capacity}% {icon}",
-    "format-charging": "{capacity}% ",
-    "format-plugged": "{capacity}% ",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
     "format-alt": "{time} {icon}",
     "format-icons": [" ", " ", " ", " ", " "]
   },
@@ -62,21 +62,21 @@
   },
   "network": {
     // "interface": "wlp2*", // (Optional) To force the use of this interface
-    "format-wifi": "{essid} ({signalStrength}%) ",
-    "format-ethernet": "{ipaddr}/{cidr} ",
-    "tooltip-format": "{ifname} via {gwaddr} ",
-    "format-linked": "{ifname} (No IP) ",
-    "format-disconnected": "Disconnected ⚠",
+    "format-wifi": "  {ifname} ({signalStrength}%)",
+    "format-ethernet": " {ipaddr}/{cidr}",
+    "tooltip-format": " {ifname} via {gwaddr}",
+    "format-linked": " {ifname} (No IP)",
+    "format-disconnected": "⚠ Disconnected",
     "format-alt": "{ifname}: {ipaddr}/{cidr}",
-    "on-click-right": "foot -e nmtui"
+    "on-click-right": "kitty -e nmtui"
   },
   "pulseaudio": {
     // "scroll-step": 1, // %, can be a float
-    "format": "{volume}% {icon} {format_source}",
+    "format": "{icon} {volume}% {format_source}",
     "format-bluetooth": "{volume}% {icon} {format_source}",
     "format-bluetooth-muted": " {icon} {format_source}",
     "format-muted": " {format_source}",
-    "format-source": "{volume}% ",
+    "format-source": " {volume}%",
     "format-source-muted": "",
     "format-icons": {
       "headphone": "",
@@ -91,14 +91,14 @@
   },
   "custom/backlight": {
     "exec": "brightnessctl g",
-    "format": "{} 󰃝",
+    "format": "󰃝 {}",
     "interval": 1,
     "on-scroll-up": "brightnessctl set 1%+",
     "on-scroll-down": "brightnessctl set 1%-"
   },
   "custom/update": {
     "exec": "checkupdates | wc -l",
-    "format": "{} 󰏕",
+    "format": "󰏕 {}",
     "interval": 7200
   }
 }

@@ -1,0 +1,32 @@
+## General
+mode=drun
+prompt=Apps
+normal_window=false
+allow_images=true
+layer=top
+term=kitty
+
+## Geometry
+width=600px
+height=400px
+location=0
+orientation=vertical
+halign=fill
+line_wrap=off
+dynamic_lines=false
+
+## Search
+exec_search=false
+hide_search=flase
+parse_search=false
+insensitive=true
+
+## Other
+hide_scroll=false
+no_action=true
+gtk_dark=true
+filter_rate=100
+
+## Keys
+key_expand=Tab
+key_exit=Escape

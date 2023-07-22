@@ -1,0 +1,43 @@
+@import url("/home/stoney/.cache/wal/colors-gtk3.css");
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+  border-radius: 0px;
+  border: none;
+}
+window {
+  background-color: rgba(50, 50, 50, 0.9);
+  color: white;
+}
+
+#input {
+  padding: 0.25em;
+}
+
+#entry {
+  padding: 6px;
+}
+
+#entry:selected {
+  /* background: linear-gradient(90deg, cyan, blue); */
+  background: linear-gradient(90deg, @color7, @color0);
+}
+
+#img {
+  padding-right: 8px;
+}
+
+#text {
+  /* color: white; */
+  color: @foreground;
+}
+
+#text:selected {
+  /* color: black; */
+  color: @background;
+}
+
+#entry {
+  padding: 6px;
+}
