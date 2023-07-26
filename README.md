@@ -4,4 +4,4 @@
 
 <h2>Showcase</h2>
 
-![1686200137_grim](https://github.com/zootedb0t/hyprland/assets/62596687/0e393667-dd6b-40d8-9f12-d322222cebf6)
+![Screenshot_2023-07-26-23-07-59](https://github.com/zootedb0t/hyprland/assets/62596687/9befdead-2992-4f3d-80c6-2c23243178a4)
