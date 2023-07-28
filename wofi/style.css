@@ -2,17 +2,20 @@
 
 * {
   font-family: "JetBrainsMono Nerd Font";
-  font-size: 12px;
+  font-size: 100%;
   border-radius: 0px;
+  margin-top: 1px;
+  margin-bottom: 1px;
   border: none;
 }
+
 window {
   background-color: rgba(50, 50, 50, 0.9);
   color: white;
 }
 
 #input {
-  padding: 0.25em;
+  padding: 8px 12px;
 }
 
 #entry {
@@ -25,7 +28,7 @@ window {
 }
 
 #img {
-  padding-right: 8px;
+  padding-right: 10px;
 }
 
 #text {

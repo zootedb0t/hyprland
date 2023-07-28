@@ -21,4 +21,4 @@ wal -nqsi "$wall"
 "$HOME"/.local/bin/dunst_color.sh &
 "$HOME"/.local/bin/pywalrofi &
 
-swww img "$wall"
+swww img "$wall" --transition-fps 30 --transition-type any --transition-duration 3

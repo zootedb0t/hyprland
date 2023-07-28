@@ -1,15 +1,17 @@
 ## General
 mode=drun
 prompt=Apps
-normal_window=false
+normal_window=true
 allow_images=true
 layer=top
-term=kitty
+term=foot
 
 ## Geometry
-width=600px
-height=400px
-location=0
+# width=600px
+# height=400px
+width=40%
+height=40%
+location=top_left
 orientation=vertical
 halign=fill
 line_wrap=off
@@ -24,6 +26,7 @@ insensitive=true
 ## Other
 hide_scroll=false
 no_action=true
+sort_order=true
 gtk_dark=true
 filter_rate=100
 
