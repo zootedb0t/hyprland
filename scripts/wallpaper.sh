@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# Edit bellow to control the images transition
-export SWWW_TRANSITION_FPS=60
-export SWWW_TRANSITION_STEP=3
-
 wal_dir=/home/stoney/Pictures/walls/
 
 if [ -z "$1" ]; then
@@ -15,6 +11,9 @@ fi
 # Generate colors using pywal
 wal -c
 wal -nqsi "$wall"
+
+# Restart waybar
+"$HOME"/.config/hypr/scripts/bar.sh
 
 # Generate zathura, dunst and rofi colorscheme
 "$HOME"/.local/bin/pywalzathura &
