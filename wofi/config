@@ -7,8 +7,6 @@ layer=top
 term=foot
 
 ## Geometry
-# width=600px
-# height=400px
 width=40%
 height=40%
 location=top_left

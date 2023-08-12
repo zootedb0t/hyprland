@@ -12,12 +12,14 @@ fi
 wal -c
 wal -nqsi "$wall"
 
-# Restart waybar
-"$HOME"/.config/hypr/scripts/bar.sh
-
 # Generate zathura, dunst and rofi colorscheme
 "$HOME"/.local/bin/pywalzathura &
 "$HOME"/.local/bin/dunst_color.sh &
 "$HOME"/.local/bin/pywalrofi &
 
 swww img "$wall" --transition-fps 30 --transition-type any --transition-duration 3
+
+# Restart waybar
+if pgrep -x "waybar" >/dev/null; then
+	killall waybar && setsid waybar -c "$HOME/.config/hypr/waybar/config.jsonc" -s "$HOME/.config/hypr/waybar/style.css"
+fi
