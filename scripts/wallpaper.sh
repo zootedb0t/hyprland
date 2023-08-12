@@ -21,5 +21,6 @@ swww img "$wall" --transition-fps 30 --transition-type any --transition-duration
 
 # Restart waybar
 if pgrep -x "waybar" >/dev/null; then
-	killall waybar && setsid waybar -c "$HOME/.config/hypr/waybar/config.jsonc" -s "$HOME/.config/hypr/waybar/style.css"
+	killall waybar
+	waybar -c "$HOME/.config/hypr/waybar/config.jsonc" -s "$HOME/.config/hypr/waybar/style.css" > /dev/null 2>&1 &
 fi
