@@ -13,9 +13,9 @@ wal -c
 wal -nqsi "$wall"
 
 # Generate zathura, dunst and rofi colorscheme
-"$HOME"/.local/bin/pywalzathura &
-"$HOME"/.local/bin/dunst_color.sh &
-"$HOME"/.local/bin/pywalrofi &
+"$HOME"/.local/bin/pywalzathura
+"$HOME"/.local/bin/dunst_color.sh
+"$HOME"/.local/bin/pywalrofi
 
 swww img "$wall" --transition-fps 30 --transition-type any --transition-duration 3
 
