@@ -25,8 +25,8 @@
   "clock": {
     // "timezone": "America/New_York",
     // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "󰅐 {:%d %b,%H:%M}",
-    "format-alt": "{:%d-%m-%Y}"
+    "format": "󰅐 {:%H:%M}",
+    "format-alt": " {:%d %b}"
   },
   // "cpu": {
   //   "format": " {usage}%",
@@ -39,7 +39,7 @@
   "temperature": {
     "hwmon-path": "/sys/class/thermal/thermal_zone0/subsystem/thermal_zone9/temp",
     "critical-threshold": 80,
-    "format-icons": ["", "", ""],
+    "format-icons": [""],
     "format": "{icon} {temperatureC}°C",
   },
   "battery": {
@@ -51,7 +51,6 @@
     "format": "{icon} {capacity}%",
     "format-charging": " {capacity}%",
     "format-plugged": " {capacity}%",
-    "format-alt": "{time} {icon}",
     "format-icons": ["󰂎", "󱊡", "󰁾", "󰂀", "󰁹"]
   },
   "battery#bat2": {
@@ -96,6 +95,6 @@
   "custom/update": {
     "exec": "checkupdates | wc -l",
     "format": "󰏕 {}",
-    "interval": 7200
+    // "interval": 7200
   }
 }

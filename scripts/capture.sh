@@ -38,12 +38,14 @@ shotnow() {
 }
 
 shotwin() {
+  sleep 1
 	w_pos=$(hyprctl activewindow | grep 'at:' | cut -d':' -f2 | tr -d ' ' | tail -n1)
 	w_size=$(hyprctl activewindow | grep 'size:' | cut -d':' -f2 | tr -d ' ' | tail -n1 | sed s/,/x/g)
 	cd "${dir}" && grim -g "$w_pos $w_size" - | tee "$file" | wl-copy
 }
 
 shotarea() {
+  sleep 1
 	cd "${dir}" && grim -g "$(slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2)" - | tee "$file" | wl-copy
 }
 
