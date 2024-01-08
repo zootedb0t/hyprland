@@ -1,7 +1,7 @@
 @import url("/home/stoney/.cache/wal/colors-gtk3.css");
 
 * {
-  font-family: "JetBrainsMono Nerd Font";
+  font-family: "BlexMono Nerd Font";
   font-size: 100%;
   border-radius: 0px;
   margin-top: 1px;
@@ -10,7 +10,7 @@
 }
 
 window {
-  background-color: rgba(50, 50, 50, 0.9);
+  background-color: rgba(50, 50, 50, 0.8);
   color: white;
 }
 
@@ -24,7 +24,7 @@ window {
 
 #entry:selected {
   /* background: linear-gradient(90deg, cyan, blue); */
-  background: linear-gradient(90deg, @color7, @color0);
+  background: linear-gradient(90deg, @color3, @color7);
 }
 
 #img {

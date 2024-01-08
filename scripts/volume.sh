@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 get_volume() {
 	amixer sget Master | grep 'Right:' | awk -F'[' '{print $2}' | awk -F'%' '{print $1}'

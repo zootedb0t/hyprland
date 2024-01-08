@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 wal_dir=/home/stoney/Pictures/walls/
 

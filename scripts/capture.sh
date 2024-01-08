@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 time=$(date +%Y-%m-%d-%H-%M-%S)
 dir="$(xdg-user-dir)/Pictures/Screenshots"

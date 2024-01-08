@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 pid=$(ps -u "$USER" -o pid,%mem,%cpu,comm | sort -b -k2 -r | sed -n '1!p' | wofi --show dmenu -p "Select any process to kill" | awk '{print $1}')
 
