@@ -50,12 +50,12 @@
     "bat": "BAT0"
   },
   "network": {
-    "format-wifi": "󰤨 {essid}",
+    "format-wifi": "󰤨 {signalStrength}%",
     "format-ethernet": "󱘖 Wired",
     "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
     "format-linked": "󱘖 {ifname} (No IP)",
     "format-disconnected": " Disconnected",
-    "format-alt": "󰤨 {signalStrength}%",
+    "format-alt": "󰤨 {essid}",
     "interval": 5,
     "on-click-right": "foot -e nmtui"
   },

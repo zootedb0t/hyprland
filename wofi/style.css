@@ -1,4 +1,4 @@
-@import url("/home/stoney/.cache/wal/colors-gtk3.css");
+@import url("/home/stoney/.config/hypr/wofi/themes/pywal.css");
 
 * {
   font-family: "BlexMono Nerd Font";
@@ -23,8 +23,7 @@ window {
 }
 
 #entry:selected {
-  /* background: linear-gradient(90deg, cyan, blue); */
-  background: linear-gradient(90deg, @color3, @color7);
+  background: linear-gradient(90deg, @color2, @color6);
 }
 
 #img {
@@ -32,12 +31,10 @@ window {
 }
 
 #text {
-  /* color: white; */
   color: @foreground;
 }
 
 #text:selected {
-  /* color: black; */
   color: @background;
 }
 

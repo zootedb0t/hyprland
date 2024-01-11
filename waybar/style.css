@@ -1,3 +1,6 @@
+/* @import "themes/catppuccin-mocha.css"; */
+@import "themes/pywal.css";
+
 * {
   font-family: "BlexMono Nerd Font", sans-serif;
   font-size: 13px;
@@ -5,8 +8,6 @@
   font-weight: bold;
   border: none;
 }
-
-@import "themes/pywal.css";
 
 window#waybar {
   background: rgba(0, 0, 0, 0.5);
