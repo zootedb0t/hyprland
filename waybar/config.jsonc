@@ -53,7 +53,7 @@
     "format-wifi": "󰤨 {signalStrength}%",
     "format-ethernet": "󱘖 Wired",
     "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
-    "format-linked": "󱘖 {ifname} (No IP)",
+    // "format-linked": "󱘖 {ifname} (No IP)",
     "format-disconnected": " Disconnected",
     "format-alt": "󰤨 {essid}",
     "interval": 5,
