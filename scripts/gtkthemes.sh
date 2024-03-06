@@ -4,7 +4,7 @@
 
 THEME='Arc-Dark'
 ICONS='Papirus-Dark'
-FONT='Iosevka Nerd Font 12'
+FONT='JetBrains Mono 12'
 CURSOR='Adwaita'
 CURSOR_SIZE='24'
 

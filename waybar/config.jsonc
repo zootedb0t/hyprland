@@ -1,31 +1,59 @@
 {
   "layer": "top",
   "position": "top",
-  "mode": "dock",
+  // "mode": "dock",
   "height": 25,
   "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
   "modules-right": [
-    "pulseaudio",
+    "network",
+		"wireplumber",
     "backlight",
     "memory",
-    "network",
     "temperature",
     "battery",
-    "clock",
     "tray"
   ],
   "hyprland/workspaces": {
     "on-click": "activate"
   },
-  "tray": {
-    "spacing": 10
-  },
   "clock": {
-    "format": "󱑎 {:%H:%M}",
-    "format-alt": "󰃭 {:%d %b}",
+    "align": 0,
+    "rotate": 0,
+    "tooltip-format": "<tt><big>{calendar}</big></tt>",
+    "format": "{:%d %b, %I:%M %p}",
+    "format-alt": "{:%a %b %d, %G}"
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume}",
+    "format-muted": "婢",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "format-icons": {
+    "headphone": "",
+    "hands-free": "",
+    "headset": "",
+    "phone": "",
+    "portable": "",
+    "car": "",
+    "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+
+  "backlight": {
+  	"device": "nvidia_0",
+  	"format": "{icon} {percent}%",
+  	"format-icons": ["", "", "", "", "", "", "", "", ""],
+  	"on-scroll-up": "brightnessctl set 1%+",
+  	"on-scroll-down": "brightnessctl set 1%-",
   },
   "memory": {
-    "interval": 2,
+    "interval": 1,
     "format": "󰍛 {used}Gb",
     "on-click": "foot -e btop"
   },
@@ -50,44 +78,23 @@
     "bat": "BAT0"
   },
   "network": {
-    "format-wifi": "󰤨 {signalStrength}%",
-    "format-ethernet": "󱘖 Wired",
-    "tooltip-format": "󱘖 {ipaddr}  {bandwidthUpBytes}  {bandwidthDownBytes}",
-    // "format-linked": "󱘖 {ifname} (No IP)",
-    "format-disconnected": " Disconnected",
-    "format-alt": "󰤨 {essid}",
-    "interval": 5,
-    "on-click-right": "foot -e nmtui"
+      "tooltip-format-ethernet": "{ifname}  {ipaddr}/{cidr}",
+      "interval": 2,
+      "tooltip-format-wifi": "{essid} ({signalStrength}%)",
+      "on-click-right": "foot -e nmtui",
+      "format": "{}",
+      "format-alt-click": "click",
+    	"format-alt": "󰑩 {essid}",
+      "format-disconnected": "󱖣 Disconnected",
+      "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+      "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}"
   },
-  "pulseaudio": {
-    "format": "{icon} {volume}",
-    "format-muted": "婢",
-    "format-bluetooth": "{volume}% {icon} {format_source}",
-    "format-bluetooth-muted": " {icon} {format_source}",
-    "format-muted": " {format_source}",
-    "format-source": " {volume}%",
-    "format-source-muted": "",
-    "format-icons": {
-    "headphone": "",
-    "hands-free": "",
-    "headset": "",
-    "phone": "",
-    "portable": "",
-    "car": "",
-    "default": ["", "", ""]
-    },
-    "on-click": "pavucontrol"
-  },
-  "backlight": {
-  	"device": "nvidia_0",
-  	"format": "{icon} {percent}%",
-  	"format-icons": ["", "", "", "", "", "", "", "", ""],
-  	"on-scroll-up": "brightnessctl set 1%+",
-  	"on-scroll-down": "brightnessctl set 1%-",
-  },
-  "custom/update": {
-    "exec": "checkupdates | wc -l",
-    "format": "󰏔 {}",
-    "interval": 3600
+  "tray": {
+    "spacing": 10
   }
+  // "custom/update": {
+  //   "exec": "checkupdates | wc -l",
+  //   "format": "󰏔 {}",
+  //   "interval": 3600
+  // }
 }

@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 
+# Set variable
 wal_dir=/home/stoney/Pictures/walls/
+local_bin_dir=/home/stoney/.local/bin/
+current_wallpaper=/home/stoney/.local/share/bg.jpg
 
+# Find wallpaper
 if [ -z "$1" ]; then
 	wall="$(fd . "$wal_dir" -e jpg -e jpeg -e png -e gif --type f | shuf -n 1)"
 else
@@ -9,18 +13,22 @@ else
 fi
 
 # Generate colors using pywal
+ln -sf "$wall" "$current_wallpaper"
 wal -c
 wal -nqsi "$wall"
 
-# Generate zathura, dunst and rofi colorscheme
-"$HOME"/.local/bin/pywalzathura
-"$HOME"/.local/bin/dunst_color.sh
-"$HOME"/.local/bin/pywalrofi
+# Generate zathura and dunst colorscheme
+"$local_bin_dir/pywalzathura"
+"$local_bin_dir/dunst_color.sh"
 
-swww img "$wall" --transition-fps 30 --transition-type any --transition-duration 3
+# Restart hyprpaper if running
+if pgrep -x "hyprpaper" >/dev/null; then
+	killall hyprpaper
+	hyprpaper &
+fi
 
-# Restart waybar
+# Restart waybar if running
 if pgrep -x "waybar" >/dev/null; then
 	killall waybar
-	waybar > /dev/null 2>&1 &
+	waybar >/dev/null 2>&1 &
 fi

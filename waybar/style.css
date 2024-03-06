@@ -2,10 +2,11 @@
 @import "themes/pywal.css";
 
 * {
-  font-family: "BlexMono Nerd Font", sans-serif;
-  font-size: 13px;
-  min-height: 11px;
-  font-weight: bold;
+  /* font-family: "FiraCode Nerd Font"; */
+  /* font-family: "Liga SFMono Nerd Font"; */
+  font-family: "Terminus";
+  font-size: 16px;
+  border-radius: 0px;
   border: none;
 }
 
@@ -14,8 +15,9 @@ window#waybar {
 }
 
 #workspaces button {
-  border-radius: 0px;
   color: @foreground;
+  /* padding: 0px 5px 0px 5px; */
+  padding: 0em 0.5em 0em 0.5em;
 }
 
 #workspaces button.active {
@@ -31,21 +33,27 @@ button:hover {
   background-color: #ff5c4d;
 }
 
+tooltip {
+  background: @background;
+}
+
+tooltip label {
+  color: @color7;
+  font-size: 14px;
+}
+
 #clock,
 #battery,
-#cpu,
 #memory,
 #temperature,
 #network,
-#pulseaudio,
 #wireplumber,
 #tray,
 #mode,
-#scratchpad,
 #backlight,
 #custom-update {
-  padding: 1px 3px;
   color: @color7;
+  padding: 0em 0.25em 0em 0.25em;
 }
 
 @keyframes blink {
