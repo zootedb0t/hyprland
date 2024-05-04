@@ -1,11 +1,9 @@
 /* @import "themes/catppuccin-mocha.css"; */
-@import "themes/pywal.css";
+@import "themes/matugen.css";
 
 * {
-  /* font-family: "FiraCode Nerd Font"; */
-  /* font-family: "Liga SFMono Nerd Font"; */
-  font-family: "Terminus";
-  font-size: 16px;
+  font-family: "JetBrains Mono NL";
+  font-size: 18px;
   border-radius: 0px;
   border: none;
 }
@@ -15,14 +13,14 @@ window#waybar {
 }
 
 #workspaces button {
-  color: @foreground;
+  color: @on_surface;
   /* padding: 0px 5px 0px 5px; */
   padding: 0em 0.5em 0em 0.5em;
 }
 
 #workspaces button.active {
-  color: @background;
-  background: @color6;
+  color: @inverse_on_surface;
+  background: @on_primary_container;
 }
 
 button:hover {
@@ -34,11 +32,13 @@ button:hover {
 }
 
 tooltip {
+  /*background: @background;*/
   background: @background;
 }
 
 tooltip label {
-  color: @color7;
+  /*color: @color7;*/
+  color: @tertiary_fixed;
   font-size: 14px;
 }
 
@@ -52,7 +52,7 @@ tooltip label {
 #mode,
 #backlight,
 #custom-update {
-  color: @color7;
+  color: @tertiary_fixed;
   padding: 0em 0.25em 0em 0.25em;
 }
 

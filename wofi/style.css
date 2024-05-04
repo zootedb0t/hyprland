@@ -1,7 +1,8 @@
 @import url("/home/stoney/.config/hypr/wofi/themes/pywal.css");
 
 * {
-  font-family: "Iosevka Nerd Font";
+  font-family: "JetBrains Mono NL";
+  font-weight: bold;
   font-size: 100%;
   border-radius: 0px;
   margin-top: 1px;
