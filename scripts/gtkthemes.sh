@@ -2,11 +2,10 @@
 
 # Set GTK Themes, Icons, Cursor and Fonts
 
-THEME='Adwaita'
+THEME='Materia-dark'
 ICONS='Papirus-Dark'
-# FONT='JetBrains Mono 14'
-FONT='Liga SFMono Nerd Font 12'
-CURSOR='Adwaita-Hyprcursor'
+FONT='JetBrainsMono Nerd Font 12'
+CURSOR='Adwaita'
 CURSOR_SIZE='24'
 
 SCHEMA='gsettings set org.gnome.desktop.interface'

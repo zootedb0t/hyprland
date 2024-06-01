@@ -1,8 +1,8 @@
 /* @import "themes/catppuccin-mocha.css"; */
-@import "themes/matugen.css";
+@import "themes/material_theme.css";
 
 * {
-  font-family: "JetBrains Mono NL";
+  font-family: "JetBrainsMono Nerd Font";
   font-size: 18px;
   border-radius: 0px;
   border: none;
@@ -13,14 +13,14 @@ window#waybar {
 }
 
 #workspaces button {
-  color: @on_surface;
+  color: @foreground;
   /* padding: 0px 5px 0px 5px; */
   padding: 0em 0.5em 0em 0.5em;
 }
 
 #workspaces button.active {
-  color: @inverse_on_surface;
-  background: @on_primary_container;
+  color: @background;
+  background: @foreground;
 }
 
 button:hover {
@@ -28,7 +28,7 @@ button:hover {
 }
 
 #workspaces button.urgent {
-  background-color: #ff5c4d;
+  background-color: @color2;
 }
 
 tooltip {
@@ -38,7 +38,7 @@ tooltip {
 
 tooltip label {
   /*color: @color7;*/
-  color: @tertiary_fixed;
+  color: @foreground;
   font-size: 14px;
 }
 
@@ -52,20 +52,20 @@ tooltip label {
 #mode,
 #backlight,
 #custom-update {
-  color: @tertiary_fixed;
+  color: @color1;
   padding: 0em 0.25em 0em 0.25em;
 }
 
 @keyframes blink {
   to {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: @background;
+    color: @foreground;
   }
 }
 
 #battery.critical:not(.charging) {
-  background-color: #f53c3c;
-  color: #ffffff;
+  background-color: @color2;
+  color: @foreground;
   animation-name: blink;
   animation-duration: 0.5s;
   animation-timing-function: linear;

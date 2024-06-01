@@ -1,14 +1,14 @@
 ## General
 mode=drun
-prompt=Apps
+prompt=Find Apps
 normal_window=true
 allow_images=true
 layer=top
-term=foot
+term=xterm-kitty
 
 ## Geometry
-width=40%
-height=40%
+width=50%
+height=50%
 location=top_left
 orientation=vertical
 halign=fill

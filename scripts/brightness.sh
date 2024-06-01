@@ -1,20 +1,20 @@
 #!/usr/bin/env sh
 
+# Dependency brightnessctl and mako
 send_notification() {
 	currentBrightness="$(brightnessctl g)"
-	# Send the notification
-	dunstify "Brightness $currentBrightness%" -r 5555 -u normal -h int:value:$((currentBrightness))
+	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Brightness: $currentBrightness%"
 }
 
 case $1 in
+# increase the backlight by 1%
 up)
-	# increase the backlight by 5%
-	brightnessctl set 5%+
+	brightnessctl set 1%+
 	send_notification
 	;;
+# decrease the backlight by 1%
 down)
-	# decrease the backlight by 5%
-	brightnessctl set 5%-
+	brightnessctl set 1%-
 	send_notification
 	;;
 esac
