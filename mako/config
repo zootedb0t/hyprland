@@ -10,10 +10,10 @@ on-touch=dismiss
 
 # STYLE OPTIONS
 font="JetBrainsMono Nerd Font", 12
-width=300
+width=200
 height=100
 margin=10
-padding=15
+padding=10
 border-size=2
 border-radius=10
 icons=1

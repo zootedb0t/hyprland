@@ -20,7 +20,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @background;
-  background: @foreground;
+  background: @color1;
 }
 
 button:hover {
@@ -32,12 +32,10 @@ button:hover {
 }
 
 tooltip {
-  /*background: @background;*/
   background: @background;
 }
 
 tooltip label {
-  /*color: @color7;*/
   color: @foreground;
   font-size: 14px;
 }
@@ -52,7 +50,7 @@ tooltip label {
 #mode,
 #backlight,
 #custom-update {
-  color: @color1;
+  color: @color0;
   padding: 0em 0.25em 0em 0.25em;
 }
 

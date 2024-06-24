@@ -4,7 +4,7 @@ prompt=Find Apps
 normal_window=true
 allow_images=true
 layer=top
-term=xterm-kitty
+term=foot
 
 ## Geometry
 width=50%
