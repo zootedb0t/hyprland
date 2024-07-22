@@ -5,30 +5,43 @@ get_volume() {
 	pamixer --get-volume
 }
 
-# Send the notification
+# Function to send notification
 send_notification() {
-	volume=$(get_volume)
-	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Volume: $volume%"
+	local volume="$1"
+	notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Volume: $volume"
 }
 
 case $1 in
 up)
-	wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%+
-	send_notification
+	pamixer -i 1
+	send_notification "$(get_volume)%"
 	;;
 down)
-	wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
-	send_notification
+	pamixer -d 1
+	# send_notification
+	send_notification "$(get_volume)%"
 	;;
 mute)
 	# Toggle mute
-	if [ "$(pamixer --get-mute)" == "false" ]; then
-		pamixer -m && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Volume Switched OFF"
-	elif [ "$(pamixer --get-mute)" == "true" ]; then
-		pamixer -u && notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Volume Switched ON"
+	is_muted=$(pamixer --get-mute)
+	if [ "$is_muted" == "false" ]; then
+		pamixer -m
+		send_notification "Muted"
+	else
+		pamixer -u
+		send_notification "Unmuted"
 	fi
 	;;
 mic)
-	wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+	# wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+	# Check if wpctl is available
+	if command -v wpctl >/dev/null 2>&1; then
+		wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+	else
+		echo "Warning: wpctl not found. Microphone mute functionality unavailable."
+	fi
+	;;
+*)
+	echo "Usage: $0 (up|down|mute|mic)"
 	;;
 esac

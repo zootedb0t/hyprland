@@ -1,109 +1,146 @@
 {
   "layer": "top",
   "position": "top",
-  // "mode": "dock",
-  "height": 25,
-	"exclusive": true,
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": [
     "network",
-		"wireplumber",
+    "wireplumber",
     "backlight",
     "memory",
     "temperature",
     "battery",
-    "tray"
+    "tray",
   ],
+
   "hyprland/workspaces": {
-    "on-click": "activate"
+    "on-click": "activate",
+    "format": "{icon}",
+    "sort-by-number": true,
+    // "format-icons": {
+    //   "active": "󰮯",
+    //   "default": "󰊠",
+    //   "urgent": "",
+    // },
+    "persistent-workspaces": {},
   },
+
   "clock": {
-    "align": 0,
-    "rotate": 0,
+    "format": "{:%I:%M %p}",
+    "format-alt": "{:%I:%M %p 󰃭 %d/%m/%y}",
     "tooltip-format": "<tt><big>{calendar}</big></tt>",
-    "format": "{:%d %b, %I:%M %p}",
-    "format-alt": "{:%a %b %d, %G}"
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#FB8301'><b>{}</b></span>",
+        "days": "<span color='#39DBE0'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#FEAC0B'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
   },
 
   "wireplumber": {
     "format": "{icon} {volume}%",
-  	"format-muted": "󰖁 Mute",
+    "format-muted": "󰖁 Mute",
     "format-bluetooth": "{volume}% {icon} {format_source}",
     "format-bluetooth-muted": " {icon} {format_source}",
     "format-source": " {volume}%",
     "format-source-muted": "",
     "format-icons": {
-    "headphone": "",
-    "hands-free": "",
-    "headset": "",
-    "phone": "",
-    "portable": "",
-    "car": "",
-    "default": [
-  	"", "", "󰕾",  ""
-    ]
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["󰕿", "󰖀", "󰕾"],
     },
-  	"reverse-scrolling": true,
-  	"on-click": "~/.config/hypr/scripts/volume.sh mute",
-  	"tooltip-format": "Volume: {volume}%"
+    "reverse-scrolling": true,
+    "on-click": "~/.config/hypr/scripts/volume.sh mute",
+    "tooltip-format": "Volume: {volume}%",
   },
 
   "backlight": {
-  	"device": "nvidia_0",
-  	"format": "{icon} {percent}%",
-  	"format-icons": ["", "", "", "", "", "", "", "", ""],
-  	"on-scroll-up": "brightnessctl set 1%+",
-  	"on-scroll-down": "brightnessctl set 1%-",
-  	"reverse-scrolling": true,
-  	"tooltip-format": "Brightness: {percent}%"
+    "device": "nvidia_0",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃚", "󰃛", "󰃜", "󰃞", "󰃟", "󰃝", "󰃠"],
+    "on-scroll-up": "brightnessctl set 1%+",
+    "on-scroll-down": "brightnessctl set 1%-",
+    "reverse-scrolling": true,
+    "tooltip-format": "Brightness: {percent}%",
   },
 
   "memory": {
-    "format": "󰍛 {used}Gb",
-    "on-click": "foot -e btop",
-    "tooltip-format": "RAM Used: {used:0.1f}G/{total:0.1f}G"
+    "states": {
+      "c": 90, // critical
+      "h": 60, // high
+      "m": 30, // medium
+    },
+    "interval": 30,
+    "format": "󰾆 {used}GB",
+    "on-click": "alacritty -e btop",
+    "format-m": "󰾅 {used}GB",
+    "format-h": "󰓅 {used}GB",
+    "format-c": " {used}GB",
+    "format-alt": "󰾆 {percentage}%",
+    "max-length": 10,
+    "tooltip": true,
+    "tooltip-format": "Memoy Usage\n󰾆 {percentage}%\n {used:0.1f}GB/{total:0.1f}GB",
   },
 
   "temperature": {
     "hwmon-path": "/sys/class/thermal/thermal_zone0/subsystem/thermal_zone9/temp",
     "critical-threshold": 80,
     "format": " {temperatureC}°C",
-    "tooltip-format": "CPU Temperatue: {temperatureC}"
+    "tooltip-format": "CPU Temperatue: {temperatureC}",
   },
 
   "battery": {
     "states": {
       "good": 95,
       "warning": 30,
-      "critical": 15
+      "critical": 15,
     },
-    "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-alt": "{time} {icon}",
-    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-  },
-  "battery#bat2": {
-    "bat": "BAT0"
+    "format": "󱠴 {capacity}%",
+    "format-full": "{icon} {capacity}%",
+    "format-discharging": "{icon} {capacity}%",
+    "format-charging": "{icon} {capacity}%",
+    "format-not-charging": "{icon} {capacity}%",
+    "format-icons": {
+      "discharging": ["󰁻", "󰁽", "󰁿", "󰂁", "󰁹"],
+      "charging": [""],
+      "full": ["󰂅"],
+    },
   },
 
   "network": {
-      "tooltip-format-ethernet": "{ifname}  {ipaddr}/{cidr}",
-      "interval": 2,
-      "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-      "on-click-right": "foot -e nmtui",
-      "format": "{}",
-      "format-alt-click": "click",
-    	"format-alt": "󰑩 {essid}",
-      "format-disconnected": "󱖣 Disconnected",
-      "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
-      "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}"
+    "interval": 2,
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "on-click-right": "alacritty -e nmtui",
+    "format-ethernet": "󰌘",
+    "format-alt": "󰑩 {essid}",
+    "format-disconnected": "󱖣 Disconnected",
+    "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
+    "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",
   },
 
   "tray": {
-    "spacing": 10
-  }
+    "spacing": 10,
+  },
 
   // "custom/update": {
   //   "exec": "checkupdates | wc -l",

@@ -12,8 +12,7 @@
 }
 
 window {
-  background-color: rgba(50, 50, 50, 0.8);
-  color: white;
+  background-color: alpha(@color0, 0.9);
 }
 
 #input {
@@ -25,7 +24,7 @@ window {
 }
 
 #entry:selected {
-  background: linear-gradient(90deg, @color0, @background);
+  background: @color4;
 }
 
 #img {
@@ -33,11 +32,7 @@ window {
 }
 
 #text {
-  color: @foreground;
-}
-
-#text:selected {
-  color: @background;
+  color: @color5;
 }
 
 #entry {

@@ -1,17 +1,14 @@
 ## General
-mode=drun
+stylesheet=style.css
 prompt=Find Apps
-normal_window=true
+normal_window=false
 allow_images=true
 layer=top
-term=foot
 
 ## Geometry
 width=50%
 height=50%
-location=top_left
 orientation=vertical
-halign=fill
 line_wrap=off
 dynamic_lines=false
 
@@ -25,7 +22,6 @@ insensitive=true
 hide_scroll=false
 no_action=true
 sort_order=true
-gtk_dark=true
 filter_rate=100
 
 ## Keys

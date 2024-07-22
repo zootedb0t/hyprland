@@ -1,21 +1,37 @@
 #!/usr/bin/env sh
 
-# Set GTK Themes, Icons, Cursor and Fonts
+GTK_SET='gsettings set org.gnome.desktop.interface'
+GTK_GET='gsettings get org.gnome.desktop.interface'
+DEFAULT_WALLPAPER="/home/stoney/Pictures/walls/vagabond.jpg"
 
-THEME='Materia-dark'
-ICONS='Papirus-Dark'
-FONT='JetBrainsMono Nerd Font 12'
-CURSOR='Adwaita'
-CURSOR_SIZE='24'
-
-SCHEMA='gsettings set org.gnome.desktop.interface'
-
-apply_themes() {
-	${SCHEMA} gtk-theme "$THEME"
-	${SCHEMA} icon-theme "$ICONS"
-	${SCHEMA} cursor-theme "$CURSOR"
-	${SCHEMA} cursor-size "$CURSOR_SIZE"
-	${SCHEMA} font-name "$FONT"
+get_wallpaper() {
+	current_wallpaper=$(swww query 2>/dev/null) # Suppress stderr on failure
+	if [[ -z "$current_wallpaper" ]]; then
+		WALLPAPER_PATH="$DEFAULT_WALLPAPER"
+	else
+		WALLPAPER_PATH=$(echo "$current_wallpaper" | sed -n 's/.*image: //p')
+	fi
 }
 
+set_theme_and_color() {
+	local active_color=$(${GTK_GET} color-scheme)
+	if [[ "$active_color" = "'prefer-dark'" ]]; then
+		THEME='Materia-light'
+		COLOR='prefer-light'
+		# Matugen is color generation tool. https://github.com/InioX/matugen
+		matugen -m light image ${WALLPAPER_PATH}
+	else
+		THEME='Materia-dark'
+		COLOR='prefer-dark'
+		matugen -m dark image ${WALLPAPER_PATH}
+	fi
+}
+
+apply_themes() {
+	set_theme_and_color
+	${GTK_SET} gtk-theme "$THEME"
+	${GTK_SET} color-scheme "$COLOR"
+}
+
+get_wallpaper
 apply_themes
