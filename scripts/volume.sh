@@ -18,7 +18,6 @@ up)
 	;;
 down)
 	pamixer -d 1
-	# send_notification
 	send_notification "$(get_volume)%"
 	;;
 mute)

@@ -1,18 +1,14 @@
 /* @import "themes/catppuccin-mocha.css"; */
 @import "themes/material_theme.css";
-/*@import "themes/wal_waybar.css";*/
 
 * {
-  font-family: "VictorMono Nerd Font Propo";
+  font-family: "ZedMono Nerd Font Propo";
   border-radius: 0px;
-  font-size: 18px;
-  min-height: 10px;
-  font-weight: bold;
+  font-size: 1.25rem;
 }
 
 window#waybar {
   background: alpha(@background, 0.5);
-  padding: 1px;
 }
 
 #workspaces button {
@@ -20,7 +16,7 @@ window#waybar {
 }
 
 #workspaces button.visible {
-  background: alpha(@color4, 0.6);
+  background: alpha(@color4, 0.5);
   color: @color1;
 }
 
@@ -48,7 +44,8 @@ tooltip label {
 #memory,
 #temperature,
 #network,
-#wireplumber,
+/*#wireplumber,*/
+#pulseaudio,
 #tray,
 #mode,
 #backlight,

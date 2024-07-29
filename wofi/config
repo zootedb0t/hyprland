@@ -3,14 +3,9 @@ stylesheet=style.css
 prompt=Find Apps
 normal_window=false
 allow_images=true
-layer=top
 
 ## Geometry
-width=50%
-height=50%
 orientation=vertical
-line_wrap=off
-dynamic_lines=false
 
 ## Search
 exec_search=false
