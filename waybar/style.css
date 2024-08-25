@@ -2,13 +2,13 @@
 @import "themes/material_theme.css";
 
 * {
-  font-family: "ZedMono Nerd Font Propo";
+  font-family: "Terminus";
   border-radius: 0px;
-  font-size: 1.25rem;
 }
 
 window#waybar {
-  background: alpha(@background, 0.5);
+	background: alpha(@background, 0.5); 
+  border: none;
 }
 
 #workspaces button {
@@ -17,7 +17,7 @@ window#waybar {
 
 #workspaces button.visible {
   background: alpha(@color4, 0.5);
-  color: @color1;
+  color: @color5;
 }
 
 button:hover {

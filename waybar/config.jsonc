@@ -1,5 +1,4 @@
 {
-  "layer": "top",
   "position": "top",
   "exclusive": true,
   "passthrough": false,
@@ -38,7 +37,7 @@
       "on-scroll": 1,
       "format": {
         "months": "<span color='#FB8301'><b>{}</b></span>",
-        "days": "<span color='#39DBE0'><b>{}</b></span>",
+        "days": "<span color='#000000'><b>{}</b></span>",
         "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
         "weekdays": "<span color='#FEAC0B'><b>{}</b></span>",
         "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
