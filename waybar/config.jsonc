@@ -2,8 +2,8 @@
   "position": "top",
   "exclusive": true,
   "passthrough": false,
-  "modules-left": ["hyprland/workspaces"],
-  "modules-center": ["clock"],
+  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "modules-center": ["hyprland/window"],
   "modules-right": [
     "network",
     // "wireplumber",
@@ -12,7 +12,8 @@
     "memory",
     "temperature",
     "battery",
-    "tray",
+    "clock",
+    "tray"
   ],
 
   "hyprland/workspaces": {
@@ -27,8 +28,18 @@
     "persistent-workspaces": {},
   },
 
+	"hyprland/submap": {
+		"format": "󰌐  {}"
+	},
+
+	"hyprland/window": {
+		"icon": true,
+    "max-length": 30,
+    "icon-size": 18
+	},
+
   "clock": {
-    "format": "{:%I:%M %p}",
+    "format": "󰥔 {:%I:%M %p}",
     "format-alt": "{:%I:%M %p 󰃭 %d/%m/%y}",
     "tooltip-format": "<tt><big>{calendar}</big></tt>",
     "calendar": {

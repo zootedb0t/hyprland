@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-	background: alpha(@background, 0.5); 
+  background: alpha(@background, 0.5);
   border: none;
 }
 
@@ -16,8 +16,8 @@ window#waybar {
 }
 
 #workspaces button.visible {
-  background: alpha(@color4, 0.5);
-  color: @color5;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 button:hover {
@@ -49,7 +49,9 @@ tooltip label {
 #tray,
 #mode,
 #backlight,
-#custom-update {
+#custom-update,
+#window,
+#submap {
   color: @foreground;
   padding: 0.3em;
 }
