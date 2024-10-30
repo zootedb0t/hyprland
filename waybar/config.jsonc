@@ -40,7 +40,7 @@
 
   "clock": {
     "format": "󰥔 {:%I:%M %p}",
-    "format-alt": "{:%I:%M %p 󰃭 %d/%m/%y}",
+    "format-alt": "󰥔 {:%I:%M %p 󰃭 %d/%m/%y}",
     "tooltip-format": "<tt><big>{calendar}</big></tt>",
     "calendar": {
       "mode": "month",
