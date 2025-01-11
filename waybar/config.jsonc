@@ -13,30 +13,30 @@
     "temperature",
     "battery",
     "clock",
-    "tray"
+    "tray",
   ],
 
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
     "sort-by-number": true,
-    // "format-icons": {
-    //   "active": "󰮯",
-    //   "default": "󰊠",
-    //   "urgent": "",
-    // },
+    "format-icons": {
+      "active": "󰮯",
+      // "default": "󰊠",
+      // "urgent": "",
+    },
     "persistent-workspaces": {},
   },
 
-	"hyprland/submap": {
-		"format": "󰌐  {}"
-	},
+  "hyprland/submap": {
+    "format": "󰌐  {}",
+  },
 
-	"hyprland/window": {
-		"icon": true,
+  "hyprland/window": {
+    "icon": true,
     "max-length": 30,
-    "icon-size": 18
-	},
+    "icon-size": 18,
+  },
 
   "clock": {
     "format": "󰥔 {:%I:%M %p}",
@@ -48,7 +48,7 @@
       "on-scroll": 1,
       "format": {
         "months": "<span color='#FB8301'><b>{}</b></span>",
-        "days": "<span color='#000000'><b>{}</b></span>",
+        "days": "<span color='#ffffff'><b>{}</b></span>",
         "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
         "weekdays": "<span color='#FEAC0B'><b>{}</b></span>",
         "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
@@ -143,10 +143,10 @@
 
   "network": {
     "interval": 2,
-    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "tooltip-format": "Network: <big><b>{ifname}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
     "on-click-right": "alacritty -e nmtui",
-    "format-ethernet": "󰌘",
-    "format-alt": "󰑩 {essid}",
+    "format-ethernet": "󰌘 {ifname}",
+    "format-alt": "󰑩 {ifname}",
     "format-disconnected": "󱖣 Disconnected",
     "format-wifi": " {bandwidthDownBytes}  {bandwidthUpBytes}",
     "format-ethernet": " {bandwidthDownBytes}  {bandwidthUpBytes}",

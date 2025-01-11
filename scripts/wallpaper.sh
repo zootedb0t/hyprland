@@ -23,4 +23,3 @@ if [[ "$active_color" == "'prefer-light'" ]]; then
 	mode="light"
 fi
 matugen -m "$mode" image "$wall"
-makoctl reload

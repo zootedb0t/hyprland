@@ -1,5 +1,5 @@
 /*@import url("/home/stoney/.config/hypr/wofi/themes/catppuccin-mocha.css");*/
-@import url("/home/stoney/.config/hypr/wofi/themes/material_theme.css");
+@import url("/home/stoney/.config/hypr/wofi/themes/material_colors.css");
 
 * {
   font-family: "JetBrainsMono Nerd Font";
@@ -7,19 +7,19 @@
 }
 
 window {
-  background-color: alpha(@color0, 0.9);
+  background-color: alpha(@inverse_primary, 0.9);
 }
 
 
 /* Inner Box */
 #inner-box {
-  background-color: @color0;
+  background-color: alpha(@inverse_primary, 0.9);
 }
 
 /* Outer Box */
 #outer-box {
   padding: 10px;
-  background-color: @color0;
+  background-color: @inverse_primary;
 }
 
 /* Scroll */
@@ -27,13 +27,13 @@ window {
   margin: 0px;
   padding: 10px;
   border: none;
-  background-color: @color0;
+  background-color: @inverse_primary;
 }
 
 #input {
   padding: 8px 12px;
   border: none;
-  background-color: @color0;
+  background-color: @inverse_primary;
 }
 
 
@@ -42,7 +42,7 @@ window {
 }
 
 #entry:selected {
-  background-color: @color4;
+  background-color: @primary_container;
 }
 
 #img {
@@ -50,5 +50,5 @@ window {
 }
 
 #text {
-  color: @color5;
+  color: @on_surface;
 }
