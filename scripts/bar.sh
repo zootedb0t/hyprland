@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 if pgrep -x "waybar" >/dev/null; then
-	killall waybar
+	systemctl kill --user waybar.service
 else
-	setsid waybar -c "$HOME/.config/hypr/waybar/config.jsonc" -s "$HOME/.config/hypr/waybar/style.css"
+	systemctl restart --user waybar.service
 fi

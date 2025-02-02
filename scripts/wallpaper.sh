@@ -5,7 +5,7 @@
 # Set variable
 wal_dir=/home/stoney/Pictures/walls/
 
-# Active color
+# Active color mode
 active_color=$(gsettings get org.gnome.desktop.interface color-scheme)
 
 # Color mode

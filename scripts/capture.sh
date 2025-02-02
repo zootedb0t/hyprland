@@ -16,8 +16,7 @@ shotwin=" Current window screenshot"
 selected_option=$(
 	echo "$shotnow
 $shotarea
-$shotwin
-" | wofi --show dmenu -i -p "Choose one"
+$shotwin" | rofi -dmenu -i -p "Choose one"
 )
 
 notify() {
