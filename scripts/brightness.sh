@@ -17,4 +17,7 @@ down)
 	brightnessctl set 1%-
 	send_notification
 	;;
+*)
+	echo "Error: Unknown argument '$1'"
+	;;
 esac

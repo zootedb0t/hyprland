@@ -28,7 +28,7 @@ mute)
 		send_notification "Muted"
 	else
 		pamixer -u
-		send_notification "Unmuted"
+		send_notification "$(get_volume)%"
 	fi
 	;;
 mic)
