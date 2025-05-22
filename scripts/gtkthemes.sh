@@ -19,11 +19,11 @@ set_theme_and_color() {
 		THEME='Materia-light'
 		COLOR='prefer-light'
 		# Matugen is color generation tool. https://github.com/InioX/matugen
-		matugen -m light image ${WALLPAPER_PATH}
+		matugen -t scheme-content -m light image ${WALLPAPER_PATH}
 	else
 		THEME='Materia-dark'
 		COLOR='prefer-dark'
-		matugen -m dark image ${WALLPAPER_PATH}
+		matugen -t scheme-content -m dark image ${WALLPAPER_PATH}
 	fi
 }
 

@@ -25,14 +25,19 @@ notify() {
 # take shots
 shotnow() {
 	sleep 1
-	cd "${dir}" && grim - | tee "$file" | wl-copy
+	# If $dir doesn't exist the function early
+	cd "${dir}" || return
+	grim "$file"
+	wl-copy --type image/png <"$file"
 	notify
 }
 
 screenshot_menu() {
 	shotarea() {
 		sleep 1
-		cd "${dir}" && grim -g "$(slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2)" - | tee "$file" | wl-copy
+		cd "${dir}" || return
+		grim -g "$(slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2)" "$file"
+		wl-copy --type image/png <"$file"
 		notify
 	}
 
@@ -40,7 +45,9 @@ screenshot_menu() {
 		sleep 1
 		w_pos=$(hyprctl activewindow | grep 'at:' | cut -d':' -f2 | tr -d ' ' | tail -n1)
 		w_size=$(hyprctl activewindow | grep 'size:' | cut -d':' -f2 | tr -d ' ' | tail -n1 | sed s/,/x/g)
-		cd "${dir}" && grim -g "$w_pos $w_size" - | tee "$file" | wl-copy
+		cd "${dir}" || return
+		grim -g "$w_pos $w_size" "$file"
+		wl-copy --type image/png <"$file"
 		notify
 	}
 

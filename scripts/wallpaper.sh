@@ -22,4 +22,4 @@ fi
 if [[ "$active_color" == "'prefer-light'" ]]; then
 	mode="light"
 fi
-matugen -m "$mode" image "$wall"
+matugen -t scheme-content -m "$mode" image "$wall"
