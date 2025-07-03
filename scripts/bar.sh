@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 
-if pgrep -x "waybar" >/dev/null; then
-	systemctl kill --user waybar.service
+# Toggle waybar service
+
+set -e
+
+if systemctl is-active --user waybar.service --quiet; then
+	systemctl stop --user waybar.service
 else
-	systemctl restart --user waybar.service
+	systemctl start --user waybar.service
 fi
