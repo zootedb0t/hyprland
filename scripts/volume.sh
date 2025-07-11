@@ -50,7 +50,7 @@ main() {
 
 	case "${1:-}" in
 	up)
-		wpctl set-volume @DEFAULT_AUDIO_SINK@ "$VOLUME_STEP+"
+		wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$VOLUME_STEP+"
 		if is_muted; then
 			send_notification "$(get_volume)% (Muted)"
 		else

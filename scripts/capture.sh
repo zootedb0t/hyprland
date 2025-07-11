@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/capture.rasi"
+
 # # Configuration
 time=$(date +%Y-%m-%d-%H-%M-%S)
 dir="/home/stoney/Pictures/Screenshots"
@@ -101,7 +103,7 @@ shotwin() {
 
 # Screenshot menu
 screenshot_menu() {
-	selected_option=$(printf "%s\n%s\n" "$shotarea" "$shotwin" | rofi -dmenu -i -p "Choose screenshot type")
+	selected_option=$(printf "%s\n%s\n" "$shotarea" "$shotwin" | $ROFI_CMD)
 
 	case "$selected_option" in
 	"$shotarea")
