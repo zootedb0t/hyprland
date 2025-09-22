@@ -4,17 +4,9 @@
 ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/powermenu.rasi"
 
 # Main menu with better formatting
-choice=$(printf "🔒 Lock Session\n💀 Kill Process\n💤 Suspend\n🔄 Reboot\n🔌 Shutdown" | $ROFI_CMD -p "Power Menu")
+choice=$(printf "💀 Kill Process\n🔒 Lock Session\n💤 Suspend\n🔄 Reboot\n🔌 Shutdown" | $ROFI_CMD -p "Power Menu")
 
 case "$choice" in
-*"Lock Session")
-	if command -v loginctl >/dev/null 2>&1; then
-		loginctl lock-session
-	else
-		notify-send "Lock Error" "No suitable lock command found" -u critical
-		exit 1
-	fi
-	;;
 *"Kill Process")
 	# Enhanced process selection with better formatting
 	selected_process=$(ps -u "$USER" -o pid,comm,%cpu,rss --sort=-rss --no-headers |
@@ -42,6 +34,14 @@ case "$choice" in
 		notify-send "Cancelled" "Process kill cancelled" -u low
 		;;
 	esac
+	;;
+*"Lock Session")
+	if command -v loginctl >/dev/null 2>&1; then
+		loginctl lock-session
+	else
+		notify-send "Lock Error" "No suitable lock command found" -u critical
+		exit 1
+	fi
 	;;
 *"Suspend")
 	confirm=$(printf "✓ Yes, suspend\n✗ No, cancel" | $ROFI_CMD -p "Suspend System?")
