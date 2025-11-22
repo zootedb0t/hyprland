@@ -4,9 +4,21 @@
 ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/powermenu.rasi"
 
 # Main menu with better formatting
-choice=$(printf "💀 Kill Process\n🔒 Lock Session\n💤 Suspend\n🔄 Reboot\n🔌 Shutdown" | $ROFI_CMD -p "Power Menu")
+choice=$(printf "🌠 Switch Theme\n💀 Kill Process\n🔒 Lock Session\n💤 Suspend\n🔄 Reboot\n🔌 Shutdown" | $ROFI_CMD -p "Power Menu")
 
 case "$choice" in
+*"Switch Theme")
+	current_theme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
+	if [ "$current_theme" = "prefer-dark" ]; then
+		~/.config/hypr/scripts/theme.sh -m light
+		gsettings set org.gnome.desktop.interface color-scheme prefer-light
+		notify-send "💡 Switching to Light Mode" "Theme updated successfully"
+	else
+		gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+		~/.config/hypr/scripts/theme.sh -m dark
+		notify-send "🌙 Switching to Dark Mode" "Theme updated successfully!"
+	fi
+	;;
 *"Kill Process")
 	# Enhanced process selection with better formatting
 	selected_process=$(ps -u "$USER" -o pid,comm,%cpu,rss --sort=-rss --no-headers |
