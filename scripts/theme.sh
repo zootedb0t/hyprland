@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# Control wallpaper and theme
+# Dependencies: matugen, fd.
+
 set -eu
 
 # Default base directory for wallpapers (can be overridden via env)
@@ -33,7 +36,6 @@ die() {
 
 WALL=""
 
-# -------- simplified & safe argument parsing --------
 while [ $# -gt 0 ]; do
 	case "$1" in
 	-m | --mode)
@@ -63,23 +65,13 @@ esac
 # Set WAL_DIR based on validated MODE. Allows BASE_WAL_DIR override from env.
 WAL_DIR="$BASE_WAL_DIR/$MODE"
 
-# Helper: pick a random file from $WAL_DIR
+# Pick a random file from $WAL_DIR
 pick_random_wall() {
-	# Prefer fd + shuf if both present
 	if command -v fd >/dev/null 2>&1 && command -v shuf >/dev/null 2>&1; then
-		# fd prints newline-separated paths; filenames containing newlines are an edge-case.
 		fd . "$WAL_DIR" -e jpg -e jpeg -e png -e gif --type f 2>/dev/null | shuf -n1 || true
 		return
 	fi
 
-	# Fallback: use find + awk to pick a random entry (line-oriented; will break on newline-containing names)
-	if command -v find >/dev/null 2>&1 && command -v awk >/dev/null 2>&1; then
-		find "$WAL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) -print 2>/dev/null |
-			awk 'BEGIN { srand(); } { a[NR]=$0 } END { if (NR>0) print a[int(rand()*NR)+1] }' || true
-		return
-	fi
-
-	# Last resort: try find and pipe to shuf if present
 	if command -v find >/dev/null 2>&1 && command -v shuf >/dev/null 2>&1; then
 		find "$WAL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) -print 2>/dev/null | shuf -n1 2>/dev/null || true
 		return
