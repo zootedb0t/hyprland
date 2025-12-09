@@ -1,155 +1,131 @@
 #!/usr/bin/env sh
 
-# Dependency matugen(https://github.com/InioX/matugen) and swww
+set -eu
 
-# Set variables
-wal_dir="/home/stoney/Pictures/walls/"
-mode="dark"
-default_scheme="scheme-content"
+# Default base directory for wallpapers (can be overridden via env)
+: "${BASE_WAL_DIR:=/home/stoney/Pictures/walls}"
 
-# Function to show usage
-show_usage() {
-    echo "Usage: $0 [OPTIONS] [WALLPAPER_PATH]"
-    echo ""
-    echo "Options:"
-    echo "  -s, --scheme TYPE     Set scheme type (content|monochrome|random)"
-    echo "  -m, --mode MODE       Set color mode (dark|light)"
-    echo "  -r, --random-scheme   Use random scheme type"
-    echo "  -h, --help           Show this help message"
-    echo ""
-    echo "Examples:"
-    echo "  $0                           # Random wallpaper with default scheme"
-    echo "  $0 -s content               # Random wallpaper with content scheme"
-    echo "  $0 -s monochrome            # Random wallpaper with monochrome scheme"
-    echo "  $0 -r                       # Random wallpaper with random scheme"
-    echo "  $0 /path/to/wallpaper.jpg   # Specific wallpaper with default scheme"
-    echo "  $0 -s content /path/to/wallpaper.jpg  # Specific wallpaper with content scheme"
+SCHEME="scheme-content" # fixed scheme
+MODE="dark"             # default mode
+
+usage() {
+	cat <<EOF
+Usage: $0 [OPTIONS] [WALLPAPER]
+
+Options:
+  -m, --mode MODE    dark|light
+  -h, --help         Show help
+
+Examples:
+  $0                     # random wallpaper, dark mode
+  $0 -m light            # random wallpaper, light mode
+  $0 /path/img.jpg       # specific wallpaper
+Environment:
+  BASE_WAL_DIR          Override base wallpaper directory
+EOF
+	exit 0
 }
 
-# All available scheme types
-schemes=("scheme-content" "scheme-monochrome")
-
-# Function to get random scheme
-get_random_scheme() {
-    echo "${schemes[$((RANDOM % ${#schemes[@]}))]}"
+die() {
+	printf "%s\n" "$1" >&2
+	exit 1
 }
 
-# Initialize variables
-scheme_type="$default_scheme"
-use_random_scheme=false
-wall=""
+WALL=""
 
-# Parse command line arguments
+# -------- simplified & safe argument parsing --------
 while [ $# -gt 0 ]; do
-    case $1 in
-        -s|--scheme)
-            if [ -n "$2" ]; then
-                case $2 in
-                    content|scheme-content)
-                        scheme_type="scheme-content"
-                        ;;
-                    monochrome|scheme-monochrome)
-                        scheme_type="scheme-monochrome"
-                        ;;
-                    random)
-                        use_random_scheme=true
-                        ;;
-                    *)
-                        echo "Error: Invalid scheme type '$2'." >&2
-                        echo "Valid options: content, monochrome, random" >&2
-                        exit 1
-                        ;;
-                esac
-                shift 2
-            else
-                echo "Error: --scheme requires an argument" >&2
-                exit 1
-            fi
-            ;;
-        -m|--mode)
-            if [ -n "$2" ]; then
-                case $2 in
-                    dark|light)
-                        mode="$2"
-                        ;;
-                    *)
-                        echo "Error: Invalid mode '$2'. Use 'dark' or 'light'." >&2
-                        exit 1
-                        ;;
-                esac
-                shift 2
-            else
-                echo "Error: --mode requires an argument" >&2
-                exit 1
-            fi
-            ;;
-        -r|--random-scheme)
-            use_random_scheme=true
-            shift
-            ;;
-        -h|--help)
-            show_usage
-            exit 0
-            ;;
-        -*)
-            echo "Error: Unknown option '$1'" >&2
-            show_usage
-            exit 1
-            ;;
-        *)
-            # This should be the wallpaper path
-            if [ -z "$wall" ]; then
-                wall="$1"
-            else
-                echo "Error: Multiple wallpaper paths specified" >&2
-                exit 1
-            fi
-            shift
-            ;;
-    esac
+	case "$1" in
+	-m | --mode)
+		shift
+		[ $# -gt 0 ] || die "--mode requires an argument"
+		MODE="$1"
+		;;
+	-h | --help)
+		usage
+		;;
+	-*)
+		die "Unknown option: $1"
+		;;
+	*)
+		WALL="$1"
+		;;
+	esac
+	shift
 done
 
-# Determine scheme type
-if [ "$use_random_scheme" = true ]; then
-    scheme_type=$(get_random_scheme)
-    echo "Using random scheme: $scheme_type"
+# Validate mode
+case "$MODE" in
+dark | light) ;;
+*) die "Invalid mode: $MODE" ;;
+esac
+
+# Set WAL_DIR based on validated MODE. Allows BASE_WAL_DIR override from env.
+WAL_DIR="$BASE_WAL_DIR/$MODE"
+
+# Helper: pick a random file from $WAL_DIR
+pick_random_wall() {
+	# Prefer fd + shuf if both present
+	if command -v fd >/dev/null 2>&1 && command -v shuf >/dev/null 2>&1; then
+		# fd prints newline-separated paths; filenames containing newlines are an edge-case.
+		fd . "$WAL_DIR" -e jpg -e jpeg -e png -e gif --type f 2>/dev/null | shuf -n1 || true
+		return
+	fi
+
+	# Fallback: use find + awk to pick a random entry (line-oriented; will break on newline-containing names)
+	if command -v find >/dev/null 2>&1 && command -v awk >/dev/null 2>&1; then
+		find "$WAL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) -print 2>/dev/null |
+			awk 'BEGIN { srand(); } { a[NR]=$0 } END { if (NR>0) print a[int(rand()*NR)+1] }' || true
+		return
+	fi
+
+	# Last resort: try find and pipe to shuf if present
+	if command -v find >/dev/null 2>&1 && command -v shuf >/dev/null 2>&1; then
+		find "$WAL_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.gif' \) -print 2>/dev/null | shuf -n1 2>/dev/null || true
+		return
+	fi
+
+	# Nothing available
+	return 1
+}
+
+# Pick random wallpaper if none provided
+if [ -z "$WALL" ]; then
+	[ -d "$WAL_DIR" ] || die "Directory not found: $WAL_DIR"
+	WALL="$(pick_random_wall || true)"
+	[ -n "$WALL" ] || die "No wallpapers found in: $WAL_DIR"
 fi
 
-# Select wallpaper if not provided
-if [ -z "$wall" ]; then
-    if [ ! -d "$wal_dir" ]; then
-        echo "Error: Wallpaper directory '$wal_dir' does not exist" >&2
-        exit 1
-    fi
-    
-    wall="$(fd . "$wal_dir" -e jpg -e jpeg -e png -e gif --type f | shuf -n 1)"
-    
-    if [ -z "$wall" ]; then
-        echo "Error: No wallpapers found in '$wal_dir'" >&2
-        exit 1
-    fi
-    
-    echo "Selected random wallpaper: $(basename "$wall")"
-else
-    # Validate provided wallpaper path
-    if [ ! -f "$wall" ]; then
-        echo "Error: Wallpaper file '$wall' does not exist" >&2
-        exit 1
-    fi
-    echo "Using wallpaper: $(basename "$wall")"
-fi
+# Final sanity: ensure file exists and is readable
+[ -r "$WALL" ] || die "Wallpaper not found or not readable: $WALL"
 
-# Display configuration
-echo "Configuration:"
-echo "  Mode: $mode"
-echo "  Scheme: $scheme_type"
-echo "  Wallpaper: $wall"
+printf "Mode: %s\n" "$MODE"
+printf "Wallpaper: %s\n" "$(basename "$WALL")"
 
-# Generate theme with matugen
-echo "Generating theme..."
-if matugen -t "$scheme_type" -m "$mode" image "$wall"; then
-    echo "Theme generated successfully!"
+# Ensure matugen exists
+command -v matugen >/dev/null 2>&1 || die "matugen not found in PATH"
+
+# Generate theme (will exit non-zero if matugen fails)
+matugen -t "$SCHEME" -m "$MODE" image "$WALL"
+
+# Set GNOME color-scheme if possible (non-fatal)
+if command -v gsettings >/dev/null 2>&1; then
+	case "$MODE" in
+	dark)
+		if gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null; then
+			printf "gsettings: set color-scheme to prefer-dark\n"
+		else
+			printf "gsettings present but couldn't set prefer-dark\n"
+		fi
+		;;
+	light)
+		if gsettings set org.gnome.desktop.interface color-scheme 'prefer-light' 2>/dev/null; then
+			printf "gsettings: set color-scheme to prefer-light\n"
+		else
+			printf "gsettings present but couldn't set prefer-light\n"
+		fi
+		;;
+	esac
 else
-    echo "Error: Failed to generate theme" >&2
-    exit 1
+	printf "gsettings not available — skipping GNOME color-scheme change\n"
 fi

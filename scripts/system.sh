@@ -11,16 +11,13 @@ case "$choice" in
 	current_theme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 	if [ "$current_theme" = "prefer-dark" ]; then
 		~/.config/hypr/scripts/theme.sh -m light
-		gsettings set org.gnome.desktop.interface color-scheme prefer-light
 		notify-send "💡 Switching to Light Mode" "Theme updated successfully"
 	else
-		gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 		~/.config/hypr/scripts/theme.sh -m dark
 		notify-send "🌙 Switching to Dark Mode" "Theme updated successfully!"
 	fi
 	;;
 *"Kill Process")
-	# Enhanced process selection with better formatting
 	selected_process=$(ps -u "$USER" -o pid,comm,%cpu,rss --sort=-rss --no-headers |
 		awk '{printf "%-8s %-20s CPU: %4.1f%% MEM: %6.1fMB\n", $1, $2, $3, $4/1024}' |
 		$ROFI_CMD -p "Select Process to Kill")
@@ -31,7 +28,7 @@ case "$choice" in
 	name=$(echo "$selected_process" | awk '{print $2}')
 
 	# Confirmation with custom styling
-	confirm=$(printf "✓ Yes, kill it\n✗ No, cancel" | $ROFI_CMD -p "Kill $name (PID: $pid)?")
+	confirm=$(printf "✅ Yes, kill it\n❌ No, cancel" | $ROFI_CMD -p "Kill $name (PID: $pid)?")
 
 	case "$confirm" in
 	*"Yes"*)
