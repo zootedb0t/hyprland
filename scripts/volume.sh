@@ -27,18 +27,22 @@ is_muted() {
 	wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED
 }
 
-# Send notification with replacement
+# Send notification
 send_notification() {
-
-	# Dismiss existing Volume notifications (mako-specific)
-	makoctl list | awk '/Volume/ {id=$2; sub(":", "", id); system("makoctl dismiss " id)}'
-
 	case "$1" in
 	Muted)
-		notify-send -u low "Volume" "Muted" --hint=int:value:0
+		notify-send \
+			-u low \
+			-h string:x-canonical-private-synchronous:volume \
+			-h int:value:0 \
+			"Volume" "Muted"
 		;;
 	*)
-		notify-send -u low "Volume: $1%" --hint=int:value:"$1"
+		notify-send \
+			-u low \
+			-h string:x-canonical-private-synchronous:volume \
+			-h int:value:"$1" \
+			"Volume: $1%"
 		;;
 	esac
 }

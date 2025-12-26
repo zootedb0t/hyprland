@@ -22,14 +22,15 @@ get_brightness() {
 	brightnessctl get
 }
 
-# Send notification with replacement
+# Send notification
 send_notification() {
-	# Dismiss existing Volume notifications (mako-specific)
-	makoctl list | awk '/Brightness/ {id=$2; sub(":", "", id); system("makoctl dismiss " id)}'
-
 	case "$1" in
 	*)
-		notify-send -u low "Brightness: $1%" --hint=int:value:"$1"
+		notify-send \
+			-u low \
+			-h string:x-canonical-private-synchronous:brightness \
+			-h int:value:"$1" \
+			"Brightness: $1%"
 		;;
 	esac
 
