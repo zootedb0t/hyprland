@@ -8,7 +8,6 @@ set -e
 # Configuration
 readonly SCRIPT_NAME="${0##*/}"
 readonly VOLUME_STEP="5%"
-readonly NOTIFICATION_ID="volume-notification"
 
 # Check if wpctl is available
 check_wpctl() {
@@ -30,8 +29,18 @@ is_muted() {
 
 # Send notification with replacement
 send_notification() {
-	notify-send -h "string:x-canonical-private-synchronous:$NOTIFICATION_ID" \
-		-u low "Volume: $1"
+
+	# Dismiss existing Volume notifications (mako-specific)
+	makoctl list | awk '/Volume/ {id=$2; sub(":", "", id); system("makoctl dismiss " id)}'
+
+	case "$1" in
+	Muted)
+		notify-send -u low "Volume" "Muted" --hint=int:value:0
+		;;
+	*)
+		notify-send -u low "Volume: $1%" --hint=int:value:"$1"
+		;;
+	esac
 }
 
 # Show usage
@@ -52,17 +61,17 @@ main() {
 	up)
 		wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$VOLUME_STEP+"
 		if is_muted; then
-			send_notification "$(get_volume)% (Muted)"
+			send_notification "Muted"
 		else
-			send_notification "$(get_volume)%"
+			send_notification "$(get_volume)"
 		fi
 		;;
 	down)
 		wpctl set-volume @DEFAULT_AUDIO_SINK@ "$VOLUME_STEP-"
 		if is_muted; then
-			send_notification "$(get_volume)% (Muted)"
+			send_notification "Muted"
 		else
-			send_notification "$(get_volume)%"
+			send_notification "$(get_volume)"
 		fi
 		;;
 	mute)
@@ -70,7 +79,7 @@ main() {
 		if is_muted; then
 			send_notification "Muted"
 		else
-			send_notification "$(get_volume)%"
+			send_notification "$(get_volume)"
 		fi
 		;;
 	mic)

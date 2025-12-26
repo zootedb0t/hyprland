@@ -8,7 +8,6 @@ set -e
 # Configuration
 readonly SCRIPT_NAME="${0##*/}"
 readonly BRIGHTNESS_STEP="5%"
-readonly NOTIFICATION_ID="brightness-notification"
 
 # Check if brightnessctl is available
 check_brightnessctl() {
@@ -25,8 +24,15 @@ get_brightness() {
 
 # Send notification with replacement
 send_notification() {
-	notify-send -h "string:x-canonical-private-synchronous:$NOTIFICATION_ID" \
-		-u low "Brightness: $(get_brightness)"
+	# Dismiss existing Volume notifications (mako-specific)
+	makoctl list | awk '/Brightness/ {id=$2; sub(":", "", id); system("makoctl dismiss " id)}'
+
+	case "$1" in
+	*)
+		notify-send -u low "Brightness: $1%" --hint=int:value:"$1"
+		;;
+	esac
+
 }
 
 # Show usage
@@ -44,11 +50,11 @@ main() {
 	case "${1:-}" in
 	up)
 		brightnessctl set "$BRIGHTNESS_STEP+"
-		send_notification
+		send_notification "$(get_brightness)"
 		;;
 	down)
 		brightnessctl set "$BRIGHTNESS_STEP-"
-		send_notification
+		send_notification "$(get_brightness)"
 		;;
 	-h | --help)
 		usage
