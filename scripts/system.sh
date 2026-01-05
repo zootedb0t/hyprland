@@ -10,11 +10,9 @@ case "$choice" in
 *"Switch Theme")
 	current_theme=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "'")
 	if [ "$current_theme" = "prefer-dark" ]; then
-		~/.config/hypr/scripts/theme.sh -m light
-		notify-send "💡 Switching to Light Mode" "Theme updated successfully"
+		~/.config/hypr/scripts/theme.sh -m light && notify-send "💡 Switching to Light Mode" "Theme updated successfully" || notify-send "Error" "Can't generate theme'..." -u critical
 	else
-		~/.config/hypr/scripts/theme.sh -m dark
-		notify-send "🌙 Switching to Dark Mode" "Theme updated successfully!"
+		~/.config/hypr/scripts/theme.sh -m dark && notify-send "🌙 Switching to Dark Mode" "Theme updated successfully!" || notify-send "Error" "Can't generate theme'..." -u critical
 	fi
 	;;
 *"Kill Process")

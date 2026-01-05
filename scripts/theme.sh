@@ -8,24 +8,16 @@ set -eu
 # Default base directory for wallpapers (can be overridden via env)
 : "${BASE_WAL_DIR:=/home/stoney/Pictures/walls}"
 
-SCHEME="scheme-content" # fixed scheme
-MODE="dark"             # default mode
+SCHEME="scheme-tonal-spot" # fixed scheme
+MODE="dark"                # default mode
 
 usage() {
-	cat <<EOF
-Usage: $0 [OPTIONS] [WALLPAPER]
-
-Options:
-  -m, --mode MODE    dark|light
-  -h, --help         Show help
-
-Examples:
-  $0                     # random wallpaper, dark mode
-  $0 -m light            # random wallpaper, light mode
-  $0 /path/img.jpg       # specific wallpaper
-Environment:
-  BASE_WAL_DIR          Override base wallpaper directory
-EOF
+	echo "Usage: $0 [-m dark|light] [-s scheme-name] [wallpaper]"
+	echo
+	echo "Options:"
+	echo "  -m, --mode     dark | light"
+	echo "  -s, --scheme   matugen scheme (e.g. scheme-tonal-spot)"
+	echo "  -h, --help     show help"
 	exit 0
 }
 
@@ -36,12 +28,37 @@ die() {
 
 WALL=""
 
+# while [ $# -gt 0 ]; do
+# 	case "$1" in
+# 	-m | --mode)
+# 		shift
+# 		[ $# -gt 0 ] || die "--mode requires an argument"
+# 		MODE="$1"
+# 		;;
+# 	-h | --help)
+# 		usage
+# 		;;
+# 	-*)
+# 		die "Unknown option: $1"
+# 		;;
+# 	*)
+# 		WALL="$1"
+# 		;;
+# 	esac
+# 	shift
+# done
+
 while [ $# -gt 0 ]; do
 	case "$1" in
 	-m | --mode)
+		MODE="${2:-}"
+		[ "$MODE" = "dark" ] || [ "$MODE" = "light" ] || die "Mode must be dark or light"
 		shift
-		[ $# -gt 0 ] || die "--mode requires an argument"
-		MODE="$1"
+		;;
+	-s | --scheme)
+		SCHEME="${2:-}"
+		[ -n "$SCHEME" ] || die "Scheme name required"
+		shift
 		;;
 	-h | --help)
 		usage

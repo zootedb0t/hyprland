@@ -1,143 +1,100 @@
 #!/usr/bin/env sh
 
-ROFI_CMD="rofi -dmenu -i -theme ~/.config/rofi/capture.rasi"
+# ======================
+# Configuration
+# ======================
+ROFI_CMD="rofi -dmenu -config ~/.config/rofi/capture.rasi"
+DIR="$HOME/Pictures/Screenshots"
+TIME=$(date +%Y-%m-%d-%H-%M-%S)
+FILE="Screenshot_${TIME}.png"
+FILEPATH="$DIR/$FILE"
 
-# # Configuration
-time=$(date +%Y-%m-%d-%H-%M-%S)
-dir="/home/stoney/Pictures/Screenshots"
-file="Screenshot_${time}.png"
-filepath="$dir/$file"
+mkdir -p "$DIR"
 
-# Ensure directory exists
-if [ ! -d "$dir" ]; then
-	mkdir -p "$dir"
-fi
+# ======================
+# Helpers
+# ======================
 
-# Options for screenshots
-shotnow=" Screenshot"
-shotarea=" Area screenshot"
-shotwin=" Current window screenshot"
+notify_success() {
+	notify-send -u low -i "$FILEPATH" "Screenshot Saved" "$FILE"
+}
 
-# Notification function
-notify() {
-	if [ -f "$filepath" ]; then
-		notify-send -u low -i "$filepath" "Screenshot Saved" "$file"
+notify_fail() {
+	notify-send -u critical "Screenshot Failed" "$1"
+}
+
+copy_clipboard() {
+	wl-copy <"$FILEPATH" --type image/png
+}
+
+take_shot() {
+	# sleep 1
+	if grim "$@"; then
+		copy_clipboard
+		notify_success
 	else
-		notify-send -u critical "Screenshot Failed" "Could not save screenshot"
+		notify_fail "Could not capture screenshot"
 	fi
 }
 
-# Copy to clipboard function
-copy_to_clipboard() {
-	if [ -f "$filepath" ]; then
-		wl-copy <"$filepath" --type image/png
-		return 0
-	else
-		return 1
-	fi
+# ======================
+# Screenshot modes
+# ======================
+
+shot_now() {
+	take_shot "$FILEPATH"
 }
 
-# Full screen screenshot
-shotnow() {
-	sleep 1
-
-	if grim "$filepath"; then
-		copy_to_clipboard
-		notify
-	else
-		notify-send -u critical "Screenshot Failed" "Could not capture full screen"
-	fi
+shot_area() {
+	selection=$(slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2)
+	[ -z "$selection" ] && notify-send "Screenshot Cancelled" && exit 0
+	take_shot -g "$selection" "$FILEPATH"
 }
 
-# Area screenshot
-shotarea() {
-	sleep 1
+shot_window() {
+	active=$(hyprctl activewindow -j) || notify_fail "No active window"
 
-	# Get selection coordinates
-	selection=$(slurp -b 1B1F28CC -c E06B74ff -s C778DD0D -w 2 2>/dev/null)
+	x=$(echo "$active" | jq -r '.at[0]')
+	y=$(echo "$active" | jq -r '.at[1]')
+	w=$(echo "$active" | jq -r '.size[0]')
+	h=$(echo "$active" | jq -r '.size[1]')
 
-	if [ -n "$selection" ]; then
-		if grim -g "$selection" "$filepath"; then
-			copy_to_clipboard
-			notify
-		else
-			notify-send -u critical "Screenshot Failed" "Could not capture selected area"
-		fi
-	else
-		notify-send -u low "Screenshot Cancelled" "No area selected"
-	fi
+	geometry="${x},${y} ${w}x${h}"
+	take_shot -g "$geometry" "$FILEPATH"
 }
 
-# Current window screenshot
-shotwin() {
-	sleep 1
+# ======================
+# Menu
+# ======================
 
-	# Get active window info
-	active_window=$(hyprctl activewindow -j 2>/dev/null)
-
-	if [ -n "$active_window" ]; then
-		# Parse window position and size using jq if available, otherwise fallback to text parsing
-		if command -v jq >/dev/null 2>&1; then
-			w_x=$(echo "$active_window" | jq -r '.at[0]')
-			w_y=$(echo "$active_window" | jq -r '.at[1]')
-			w_width=$(echo "$active_window" | jq -r '.size[0]')
-			w_height=$(echo "$active_window" | jq -r '.size[1]')
-			geometry="${w_x},${w_y} ${w_width}x${w_height}"
-		else
-			# Fallback to text parsing (your original method)
-			w_pos=$(echo "$active_window" | grep 'at:' | cut -d':' -f2 | tr -d ' ' | tail -n1)
-			w_size=$(echo "$active_window" | grep 'size:' | cut -d':' -f2 | tr -d ' ' | tail -n1 | sed 's/,/x/g')
-			geometry="$w_pos $w_size"
-		fi
-
-		if grim -g "$geometry" "$filepath"; then
-			copy_to_clipboard
-			notify
-		else
-			notify-send -u critical "Screenshot Failed" "Could not capture window"
-		fi
-	else
-		notify-send -u critical "Screenshot Failed" "Could not get active window info"
-	fi
+show_menu() {
+	printf "Area screenshot\nWindow screenshot\n" | $ROFI_CMD
 }
 
-# Screenshot menu
-screenshot_menu() {
-	selected_option=$(printf "%s\n%s\n" "$shotarea" "$shotwin" | $ROFI_CMD)
-
-	case "$selected_option" in
-	"$shotarea")
-		shotarea
-		;;
-	"$shotwin")
-		shotwin
-		;;
-	*)
-		# User cancelled or invalid selection
-		exit 0
-		;;
-	esac
-}
+# ======================
+# Entry point
+# ======================
 
 case "$1" in
 now)
-	shotnow
-	;;
-menu)
-	screenshot_menu
+	shot_now
 	;;
 area)
-	shotarea
+	shot_area
 	;;
 window)
-	shotwin
+	shot_window
+	;;
+menu)
+	choice=$(show_menu)
+	case "$choice" in
+	"Area screenshot") shot_area ;;
+	"Window screenshot") shot_window ;;
+	*) exit 0 ;;
+	esac
 	;;
 *)
-	echo "Usage: $0 {now|menu|area|window}"
-	echo "  now    - Take full screen screenshot"
-	echo "  menu   - Show selection menu"
-	echo "  area   - Take area screenshot"
-	echo "  window - Take current window screenshot"
+	echo "Usage: $0 {now|area|window|menu}"
 	exit 1
 	;;
 esac

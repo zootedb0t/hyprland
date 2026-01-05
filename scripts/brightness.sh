@@ -3,74 +3,38 @@
 # Brightness control script
 # Dependencies: brightnessctl, libnotify
 
-set -e
+STEP="5%"
 
-# Configuration
-readonly SCRIPT_NAME="${0##*/}"
-readonly BRIGHTNESS_STEP="5%"
-
-# Check if brightnessctl is available
-check_brightnessctl() {
-	if ! command -v brightnessctl >/dev/null 2>&1; then
-		printf "Error: brightnessctl not found. Install brightnessctl package.\n" >&2
-		exit 1
-	fi
+# Check dependency
+command -v brightnessctl >/dev/null 2>&1 || {
+	echo "Error: brightnessctl not found"
+	exit 1
 }
 
-# Get current brightness value
+# Get brightness percentage
 get_brightness() {
-	brightnessctl get
+	brightnessctl -m | cut -d',' -f4
 }
 
 # Send notification
-send_notification() {
-	case "$1" in
-	*)
-		notify-send \
-			-u low \
-			-h string:x-canonical-private-synchronous:brightness \
-			-h int:value:"$1" \
-			"Brightness: $1%"
-		;;
-	esac
-
+notify() {
+	notify-send \
+		-u low \
+		-h string:x-canonical-private-synchronous:brightness \
+		"Brightness: $(get_brightness)"
 }
 
-# Show usage
-usage() {
-	printf "Usage: %s {up|down}\n" "$SCRIPT_NAME"
-	printf "Commands:\n"
-	printf "  up    - Increase brightness by %s\n" "$BRIGHTNESS_STEP"
-	printf "  down  - Decrease brightness by %s\n" "$BRIGHTNESS_STEP"
-}
-
-# Main logic
-main() {
-	check_brightnessctl
-
-	case "${1:-}" in
-	up)
-		brightnessctl set "$BRIGHTNESS_STEP+"
-		send_notification "$(get_brightness)"
-		;;
-	down)
-		brightnessctl set "$BRIGHTNESS_STEP-"
-		send_notification "$(get_brightness)"
-		;;
-	-h | --help)
-		usage
-		;;
-	"")
-		printf "Error: No command specified\n" >&2
-		usage
-		exit 1
-		;;
-	*)
-		printf "Error: Invalid command '%s'\n" "$1" >&2
-		usage
-		exit 1
-		;;
-	esac
-}
-
-main "$@"
+case "$1" in
+up)
+	brightnessctl set "$STEP+"
+	notify
+	;;
+down)
+	brightnessctl set "$STEP-"
+	notify
+	;;
+*)
+	echo "Usage: $0 {up|down}"
+	exit 1
+	;;
+esac
